@@ -15,6 +15,7 @@
         <spring.boot.version>3.2.0</spring.boot.version>
     </properties>
 
+    <!-- Gestión de versiones de dependencias -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -29,7 +30,7 @@
 
     <dependencies>
 
-        <!-- Web (Spring MVC / REST) -->
+        <!-- Spring Web (REST API) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -48,22 +49,21 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok (solo para desarrollo) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- Swagger / OpenAPI UI (springdoc v2) -->
-       <dependency>
-    		<groupId>org.springdoc</groupId>
-    		<artifactId>springdoc-openapi-ui</artifactId>
-    		<version>1.7.0</version>
-		</dependency>
+        <!-- Swagger / OpenAPI (Spring Boot 3 compatible) -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.5.0</version>
+        </dependency>
 
-
-        <!-- Test -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -75,7 +75,7 @@
     <build>
         <plugins>
 
-            <!-- Plugin para compilar con Java 17 -->
+            <!-- Compilador Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,14 +86,14 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin de Spring Boot -->
+            <!-- SPRING BOOT PLUGIN (con versión para evitar warnings) -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
             </plugin>
 
         </plugins>
     </build>
 
 </project>
-
