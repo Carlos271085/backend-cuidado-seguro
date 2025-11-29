@@ -16,22 +16,18 @@ public class Mensaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Paciente al que se refiere el mensaje
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "paciente_id")
-    private Paciente paciente;
+    @Column(length = 200)
+    private String asunto;   // Asunto del mensaje
 
-    // Usuario que envía el mensaje (Tutor o Profesional)
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "remitente_id")
-    private Usuario remitente;
+    @Column(columnDefinition = "TEXT")
+    private String texto;    // Cuerpo del mensaje
 
-    @Column(nullable = false, length = 150)
-    private String asunto;
+    @Column(name = "paciente_id", nullable = false)
+    private Long pacienteId; // Paciente receptor
 
-    @Column(nullable = false, length = 1000)
-    private String contenido;
+    @Column(name = "remitente_id", nullable = false)
+    private Long remitenteId; // Tutor u otro usuario que envía
 
-    @Column(nullable = false)
-    private LocalDateTime fechaEnvio;
+    private LocalDateTime fecha; // Se asigna en el service
 }
+

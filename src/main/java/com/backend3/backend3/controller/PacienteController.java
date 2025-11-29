@@ -18,32 +18,50 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
+    
+    // LISTAR TODOS
+    
     @GetMapping
     public ResponseEntity<List<Paciente>> listarTodos() {
         return ResponseEntity.ok(pacienteService.listarTodos());
     }
 
+    
+    // BUSCAR POR ID
+    
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Paciente> buscarPorId(@PathVariable("id") Long id) {
         return pacienteService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    
+    // CREAR
+    
     @PostMapping
     public ResponseEntity<Paciente> crear(@RequestBody Paciente paciente) {
         return ResponseEntity.ok(pacienteService.crear(paciente));
     }
 
+    
+    // ACTUALIZAR
+    
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @RequestBody Paciente datos) {
+    public ResponseEntity<Paciente> actualizar(
+            @PathVariable("id") Long id,
+            @RequestBody Paciente datos) {
+
         return pacienteService.actualizar(id, datos)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    
+    // ELIMINAR
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
         pacienteService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

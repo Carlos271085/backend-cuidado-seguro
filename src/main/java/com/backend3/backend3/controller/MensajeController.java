@@ -1,12 +1,12 @@
 package com.backend3.backend3.controller;
 
+import com.backend3.backend3.dto.MensajeRequest;
 import com.backend3.backend3.entity.Mensaje;
 import com.backend3.backend3.service.MensajeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mensajes")
@@ -19,19 +19,44 @@ public class MensajeController {
         this.mensajeService = mensajeService;
     }
 
+    // ============================================================
+    // LISTAR MENSAJES POR PACIENTE (GET)
+    // ============================================================
     @GetMapping("/paciente/{pacienteId}")
-    public ResponseEntity<List<Mensaje>> listarPorPaciente(@PathVariable Long pacienteId) {
-        return ResponseEntity.ok(mensajeService.listarPorPaciente(pacienteId));
+    public ResponseEntity<List<Mensaje>> listarPorPaciente(
+            @PathVariable("pacienteId") Long pacienteId) {
+
+        List<Mensaje> mensajes = mensajeService.listarPorPaciente(pacienteId);
+
+        if (mensajes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(mensajes);
     }
 
+    // ============================================================
+    // ENVIAR MENSAJE (POST)
+    // ============================================================
     @PostMapping
-    public ResponseEntity<Mensaje> enviarMensaje(@RequestBody Map<String, Object> body) {
-        Long pacienteId = Long.valueOf(body.get("pacienteId").toString());
-        Long remitenteId = Long.valueOf(body.get("remitenteId").toString());
-        String asunto = body.get("asunto").toString();
-        String contenido = body.get("contenido").toString();
+    public ResponseEntity<Mensaje> enviarMensaje(@RequestBody MensajeRequest request) {
 
-        Mensaje mensaje = mensajeService.enviarMensaje(pacienteId, remitenteId, asunto, contenido);
+        // Validación simple
+        if (request.getPacienteId() == null ||
+                request.getRemitenteId() == null ||
+                request.getTexto() == null ||
+                request.getTexto().isBlank()) {
+
+            return ResponseEntity.badRequest().build();
+        }
+
+        Mensaje mensaje = mensajeService.enviarMensaje(
+                request.getPacienteId(),
+                request.getRemitenteId(),
+                request.getAsunto(),
+                request.getTexto()
+        );
+
         return ResponseEntity.ok(mensaje);
     }
 }
