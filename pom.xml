@@ -15,7 +15,7 @@
         <spring.boot.version>3.2.0</spring.boot.version>
     </properties>
 
-    <!-- Gestión de versiones de dependencias -->
+    <!-- Gestión de versiones de las dependencias -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -30,19 +30,19 @@
 
     <dependencies>
 
-        <!-- Spring Web (REST API) -->
+        <!-- API REST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Data JPA -->
+        <!-- JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- MySQL Driver -->
+        <!-- Driver MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -56,7 +56,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Swagger / OpenAPI (Spring Boot 3 compatible) -->
+        <!-- Swagger / OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -75,7 +75,7 @@
     <build>
         <plugins>
 
-            <!-- Compilador Java 17 -->
+            <!-- Compilador Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,11 +86,18 @@
                 </configuration>
             </plugin>
 
-            <!-- SPRING BOOT PLUGIN (con versión para evitar warnings) -->
+            <!-- Plugin SPRING BOOT → crea el JAR EJECUTABLE (FAT JAR) -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
